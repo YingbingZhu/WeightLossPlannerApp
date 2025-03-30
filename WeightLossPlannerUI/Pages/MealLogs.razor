@@ -1,0 +1,58 @@
+@page "/meals"                     
+@inject HttpClient Http           
+
+<h3>Meal Logs</h3>
+
+@if (meals == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Meal</th>
+                <th>Calories</th>
+                <th>User</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var meal in meals)
+            {
+                <tr>
+                    <td>@meal.date.ToShortDateString()</td>       
+                    <td>@meal.mealName</td>                      
+                    <td>@meal.calories</td>                       
+                    <td>@meal.userProfile?.name</td>               
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    public class MealLog
+    {
+        public DateTime date { get; set; }
+        public string mealName { get; set; } = "";
+        public double calories { get; set; }
+        public UserProfile? userProfile { get; set; }  
+    }
+
+    public class UserProfile
+    {
+        public string name { get; set; } = "";
+    }
+
+    // List to hold meals loaded from the API
+    List<MealLog>? meals;
+
+    // Runs when the page is first loaded (like "componentDidMount" in React)
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch data from your backend API
+        meals = await Http.GetFromJsonAsync<List<MealLog>>("https://localhost:5038/api/MealLog");
+    }
+}
