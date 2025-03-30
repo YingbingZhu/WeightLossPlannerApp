@@ -26,6 +26,7 @@ To run locally, you'll need to configure your connection string securely using t
 cd WeightLossPlannerAPI
 dotnet user-secrets init
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "<Your Azure SQL connection string here>"
+```
 
 ## 🧪 Getting Started
 
