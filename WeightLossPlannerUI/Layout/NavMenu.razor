@@ -10,13 +10,26 @@
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="nav flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill me-2" aria-hidden="true"></span> Home
             </NavLink>
         </div>
+
         <div class="nav-item px-3">
-            <NavLink href="/meals" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> 🍽️ Meal Logs
+            <NavLink class="nav-link" href="/meals" Match="NavLinkMatch.Prefix">
+                <span class="bi bi-egg-fried me-2" aria-hidden="true"></span> 🍽️ Meal Logs
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/exercise" Match="NavLinkMatch.Prefix">
+                <span class="bi bi-activity me-2" aria-hidden="true"></span> 🏃 Exercise Logs
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/dashboard" Match="NavLinkMatch.Prefix">
+                <span class="bi bi-bar-chart-line-fill me-2" aria-hidden="true"></span> 📊 Dashboard
             </NavLink>
         </div>
     </nav>
