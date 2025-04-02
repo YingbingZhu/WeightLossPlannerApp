@@ -1,0 +1,82 @@
+@page "/dashboard"
+@inject HttpClient Http
+
+@using Radzen
+@using Radzen.Blazor
+
+<h3>📊 Daily Calorie Summary</h3>
+
+<RadzenCard>
+    <RadzenChart style="height: 400px">
+        <RadzenLineSeries Data="@calorieSummaries" 
+                          CategoryProperty="Date" 
+                          Title="Calories Eaten" 
+                          ValueProperty="CaloriesEaten"
+                          LineType="LineType.Solid" 
+                          Stroke="rgba(255, 99, 132, 1)" 
+                          StrokeWidth="2">
+            <RadzenMarkers MarkerType="MarkerType.Circle" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Data="@calorieSummaries" 
+                          CategoryProperty="Date" 
+                          Title="Calories Burned" 
+                          ValueProperty="CaloriesBurned"
+                          LineType="LineType.Solid" 
+                          Stroke="rgba(54, 162, 235, 1)" 
+                          StrokeWidth="2">
+            <RadzenMarkers MarkerType="MarkerType.Square" />
+        </RadzenLineSeries>
+        <RadzenCategoryAxis Padding="20" FormatString="{0:MMM dd}" />
+        <RadzenValueAxis>
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Calories" />
+        </RadzenValueAxis>
+        <RadzenLegend Position="LegendPosition.Bottom" />
+    </RadzenChart>
+</RadzenCard>
+
+@code {
+    public class DailyCalorieSummary
+    {
+        public DateTime Date { get; set; }
+        public int CaloriesEaten { get; set; }
+        public int CaloriesBurned { get; set; }
+    }
+
+    private List<DailyCalorieSummary> calorieSummaries = new List<DailyCalorieSummary>();
+
+    protected override void OnInitialized()
+    {
+        // Use sample data for now
+        calorieSummaries = new List<DailyCalorieSummary>
+        {
+            new DailyCalorieSummary { Date = DateTime.Now.AddDays(-5), CaloriesEaten = 1800, CaloriesBurned = 2200 },
+            new DailyCalorieSummary { Date = DateTime.Now.AddDays(-4), CaloriesEaten = 2100, CaloriesBurned = 2000 },
+            new DailyCalorieSummary { Date = DateTime.Now.AddDays(-3), CaloriesEaten = 1950, CaloriesBurned = 2300 },
+            new DailyCalorieSummary { Date = DateTime.Now.AddDays(-2), CaloriesEaten = 1750, CaloriesBurned = 2100 },
+            new DailyCalorieSummary { Date = DateTime.Now.AddDays(-1), CaloriesEaten = 2000, CaloriesBurned = 2400 },
+            new DailyCalorieSummary { Date = DateTime.Now, CaloriesEaten = 1600, CaloriesBurned = 2200 }
+        };
+    }
+
+    // Commented out for now - we'll implement this properly once authentication is set up
+    /*
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var data = await Http.GetFromJsonAsync<List<DailyCalorieSummary>>("https://localhost:5038/api/dailycaloriessummary/me");
+            
+            if (data != null)
+            {
+                calorieSummaries = data;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching data: {ex.Message}");
+            // We already have sample data initialized
+        }
+    }
+    */
+}
